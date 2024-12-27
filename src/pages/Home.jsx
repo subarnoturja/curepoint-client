@@ -6,11 +6,12 @@ import icon01 from "../assets/images/icon01.png"
 import icon02 from "../assets/images/icon02.png"
 import icon03 from "../assets/images/icon03.png"
 import { BsArrowRight } from "react-icons/bs";
+import About from "../components/About/About";
 
 const Home = () => {
   return (
     <>
-      {/* Hero Section */}
+      {/* Hero Section start */}
       <section className="hero__section pt-[60px] 2xl:h-[800px]">
         <div className="container">
           <div className="flex flex-col lg:flex-row gap-[90px] items-center  justify-between">
@@ -127,6 +128,8 @@ const Home = () => {
           </div>
         </div>
       </section>
+      {/* About section */}
+        <About />
     </>
   );
 };
