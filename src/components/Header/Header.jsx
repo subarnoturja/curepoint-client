@@ -2,7 +2,7 @@ import { Link, NavLink } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
 import userImg from "../../assets/images/avatar-icon.png";
 import { BiMenu } from "react-icons/bi";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 const navLinks = [
   {
@@ -25,24 +25,8 @@ const navLinks = [
 
 const Header = () => {
 
-    const headerRef = useRef(null)
+    const [isScrolled, setIsScrolled] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
-
-    const handleStickyHeader = () => {
-        window.addEventListener('scroll', () => {
-            if(document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
-                headerRef.current.classList.add('sticky_header')
-            }
-            else{
-                headerRef.current.classList.remove('sticky_header')
-            }
-        })
-    }
-
-    useEffect(() => {
-        handleStickyHeader()
-        return () => window.removeEventListener('scroll', handleStickyHeader)
-    })
 
     const toggleMenu = () => {
        setMenuOpen(!menuOpen);
@@ -52,9 +36,21 @@ const Header = () => {
       setMenuOpen(false);
     }
 
+    useEffect(() => {
+      const handleScroll = () => {
+        setIsScrolled(window.scrollY > 0); // Check if the page is scrolled
+      };
+  
+      window.addEventListener("scroll", handleScroll);
+      return () => {
+        window.removeEventListener("scroll", handleScroll); // Cleanup
+      };
+    }, []);
+
   return (
-    <header className="header flex items-center" ref={headerRef}>
-      <div className="container">
+    <header className={`header flex items-center sticky top-0 lg:z-50 w-full transition-all duration-300 ${isScrolled ? "bg-white backdrop-blur-lg shadow-lg"
+            : "bg-white"}`}>
+      <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div>
