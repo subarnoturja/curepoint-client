@@ -254,6 +254,8 @@ const Home = () => {
           <Testimonials></Testimonials>
         </div>
       </section>
+      {/* Footer Section */}
+      
     </>
   );
 };
