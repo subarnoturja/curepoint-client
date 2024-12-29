@@ -7,13 +7,14 @@ import icon02 from "../assets/images/icon02.png";
 import icon03 from "../assets/images/icon03.png";
 import featureImg from "../assets/images/feature-img.png"
 import videoIcon from '../assets/images/video-icon.png'
-import avaterIcon from '../assets/images/avatar-icon.png'
+import avatarIcon from '../assets/images/avatar-icon.png'
 import faqImg from "../assets/images/faq-img.png"
 import { BsArrowRight } from "react-icons/bs";
 import About from "../components/About/About";
 import ServiceList from "../components/Services/ServiceList";
 import DoctorList from "../components/Doctors/DoctorList";
 import FaqList from "../components/Faq/FaqList";
+import Testimonials from "../components/Testimonials/Testimonials";
 
 const Home = () => {
   return (
@@ -204,7 +205,7 @@ const Home = () => {
                   Consultation
                 </div>
                 <div className="flex items-center gap-[6px] lg:gap-[10px] mt-2 md:mt-[18px]">
-                  <img src={avaterIcon} alt="" />
+                  <img src={avatarIcon} alt="" />
                   <h4 className="text-[10px] leading-3 lg:text-[16px] lg:leading-[22px] font-[700] text-headingColor">Wayne Collins</h4>
                 </div>
               </div>
@@ -240,6 +241,17 @@ const Home = () => {
               <FaqList></FaqList>
             </div>
           </div>
+        </div>
+      </section>
+      {/* Testimonials */}
+      <section>
+        <div className="container">
+          <div className="xl:w-[470px] mx-auto">
+            <h2 className="heading text-center">What our patient say</h2>
+            <p className="text__para text-center">Hear from our patients about their experiences and how our care has made a difference in their lives.
+            </p>
+          </div>
+          <Testimonials></Testimonials>
         </div>
       </section>
     </>
