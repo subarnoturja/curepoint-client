@@ -11,6 +11,7 @@ import avaterIcon from '../assets/images/avatar-icon.png'
 import { BsArrowRight } from "react-icons/bs";
 import About from "../components/About/About";
 import ServiceList from "../components/Services/ServiceList";
+import DoctorList from "../components/Doctors/DoctorList";
 
 const Home = () => {
   return (
@@ -207,6 +208,20 @@ const Home = () => {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+      {/* Doctors Section */}
+      <section>
+        <div className="container">
+          <div className="xl-w-[470px] mx-auto">
+            <h2 className="heading text-center">
+              Our Great Doctors
+            </h2>
+            <p className="text__para text-center">
+              World class care for everyone. Our health system offers unmatched, expert health care.
+            </p>
+          </div>
+          <DoctorList></DoctorList>
         </div>
       </section>
     </>
