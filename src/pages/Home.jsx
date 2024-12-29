@@ -8,10 +8,12 @@ import icon03 from "../assets/images/icon03.png";
 import featureImg from "../assets/images/feature-img.png"
 import videoIcon from '../assets/images/video-icon.png'
 import avaterIcon from '../assets/images/avatar-icon.png'
+import faqImg from "../assets/images/faq-img.png"
 import { BsArrowRight } from "react-icons/bs";
 import About from "../components/About/About";
 import ServiceList from "../components/Services/ServiceList";
 import DoctorList from "../components/Doctors/DoctorList";
+import FaqList from "../components/Faq/FaqList";
 
 const Home = () => {
   return (
@@ -222,6 +224,22 @@ const Home = () => {
             </p>
           </div>
           <DoctorList></DoctorList>
+        </div>
+      </section>
+      {/* FAQ Section */}
+      <section>
+        <div className="container">
+          <div className="flex justify-between gap-[50px] md:gap-0">
+            <div className="w-2/3 hidden md:block">
+              <img src={faqImg} alt="" />
+            </div>
+            <div className="w-full md:w-1/2">
+              <h2 className="heading">
+                Most questions by our beloved patients
+              </h2>
+              <FaqList></FaqList>
+            </div>
+          </div>
         </div>
       </section>
     </>

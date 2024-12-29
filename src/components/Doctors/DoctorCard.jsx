@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
 import starIcon from "../../assets/images/Star.png"
 import { BsArrowRight } from "react-icons/bs";
