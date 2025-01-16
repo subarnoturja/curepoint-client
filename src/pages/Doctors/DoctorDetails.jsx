@@ -1,6 +1,8 @@
 import { useState } from "react";
 import doctorImg from "../../assets/images/doctor-img01.png";
 import starIcon from "../../assets/images/Star.png";
+import DoctorAbout from "./DoctorAbout";
+import Feedback from "./Feedback";
 
 const DoctorDetails = () => {
   
@@ -30,7 +32,7 @@ const DoctorDetails = () => {
                     (272)
                   </span>
                 </div>
-                <p className="text_para text-[14px] leading-6 md:text-[15px] lg:max-w-[390px]">
+                <p className="text__para text-[14px] leading-6 md:text-[15px] lg:max-w-[390px]">
                   Lorem ipsum dolor sit amet consectetur adipisicing elit.
                   Neque, alias?
                 </p>
@@ -45,7 +47,12 @@ const DoctorDetails = () => {
               </button>
             </div>
             <div className="mt-[50px]">
-
+                {
+                    tab === "about" && <DoctorAbout />
+                }
+                {
+                    tab === "feedback" && <Feedback />
+                }
             </div>
           </div>
           <div></div>
