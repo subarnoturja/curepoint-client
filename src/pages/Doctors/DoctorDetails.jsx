@@ -3,12 +3,12 @@ import doctorImg from "../../assets/images/doctor-img01.png";
 import starIcon from "../../assets/images/Star.png";
 import DoctorAbout from "./DoctorAbout";
 import Feedback from "./Feedback";
+import SidePanel from "./SidePanel";
 
 const DoctorDetails = () => {
-  
-    const [tab, setTab] = useState('about');
-  
-    return (
+  const [tab, setTab] = useState("about");
+
+  return (
     <section>
       <div className="max-w-[1170px] px-5 mx-auto">
         <div className="grid md:grid-cols-3 gap-[50px]">
@@ -39,23 +39,32 @@ const DoctorDetails = () => {
               </div>
             </div>
             <div className="mt-[50px] border-b border-solid border-[#0066ff34]">
-              <button onClick={() => setTab('about')} className={`${tab === 'about' && 'border-b border-solid border-primaryColor'} py-2 px-5 mr-5 text-[16px] leading-7 text-headingColor font-semibold`}>
+              <button
+                onClick={() => setTab("about")}
+                className={`${
+                  tab === "about" && "border-b border-solid border-primaryColor"
+                } py-2 px-5 mr-5 text-[16px] leading-7 text-headingColor font-semibold`}
+              >
                 About
               </button>
-              <button onClick={() => setTab('feedback')} className={`${tab === 'feedback' && 'border-b border-solid border-primaryColor'} py-2 px-5 mr-5 text-[16px] leading-7 text-headingColor font-semibold`}>
+              <button
+                onClick={() => setTab("feedback")}
+                className={`${
+                  tab === "feedback" &&
+                  "border-b border-solid border-primaryColor"
+                } py-2 px-5 mr-5 text-[16px] leading-7 text-headingColor font-semibold`}
+              >
                 Feedback
               </button>
             </div>
             <div className="mt-[50px]">
-                {
-                    tab === "about" && <DoctorAbout />
-                }
-                {
-                    tab === "feedback" && <Feedback />
-                }
+              {tab === "about" && <DoctorAbout />}
+              {tab === "feedback" && <Feedback />}
             </div>
           </div>
-          <div></div>
+          <div>
+            <SidePanel />
+          </div>
         </div>
       </div>
     </section>
