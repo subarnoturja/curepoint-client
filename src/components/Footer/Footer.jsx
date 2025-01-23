@@ -1,5 +1,5 @@
 import { AiFillGithub, AiFillInstagram, AiFillLinkedin, AiFillYoutube } from "react-icons/ai";
-import logo from '../../assets/images/CurePoint.png'
+import logo from '../../assets/images/logo.png'
 import { Link } from "react-router-dom";
 
 const socialLinks = [

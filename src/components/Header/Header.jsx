@@ -1,5 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
-import logo from '../../assets/images/CurePoint.png'
+import logo from '../../assets/images/logo.png'
 import userImg from "../../assets/images/avatar-icon.png";
 import { BiMenu } from "react-icons/bi";
 import { useEffect, useState } from "react";
