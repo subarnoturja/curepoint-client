@@ -1,5 +1,8 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { BASE_URL } from "../config";
+import { Bounce, toast } from "react-toastify";
+import { authContext } from "../context/AuthContext";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -7,9 +10,69 @@ const Login = () => {
     password: "",
   });
 
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const { dispatch } = useContext(authContext);
+
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
+  const submitHandler = async event => {
+    event.preventDefault();
+    setLoading(true)
+    try {
+      const res = await fetch(`${BASE_URL}/auth/login`, {
+        method: 'post',
+        headers: {
+          "Content-Type":'application/json'
+        },
+        body: JSON.stringify(formData)
+      })
+      const result = await res.json()
+
+      if(!res.ok){
+        throw new Error(result.message)
+      }
+
+      dispatch({
+        type:'LOGIN_SUCCESS',
+        payload: {
+          user: result.data,
+          token: result.token,
+          role: result.role,
+        }
+      })
+
+      setLoading(false);
+      toast.success(result.message, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+        });
+      navigate('/')
+
+    } catch (error) {
+      toast.error(error.message, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+        });
+      setLoading(false)
+    }
+  }
 
   return (
     <section className="px-4 md:px-0">
@@ -18,7 +81,7 @@ const Login = () => {
           <span className="text-primaryColor">Login</span> Here
         </h3>
         {/* Form */}
-        <form className="py-4 md:py-0">
+        <form className="py-4 md:py-0" onSubmit={submitHandler}>
           <div className="mb-5">
             <input
               type="email"

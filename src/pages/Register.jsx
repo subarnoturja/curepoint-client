@@ -53,7 +53,7 @@ const Register = () => {
         }
 
         setLoading(false);
-        toast.success('Registration Successful', {
+        toast.success(message, {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
