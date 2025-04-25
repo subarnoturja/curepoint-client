@@ -1,12 +1,12 @@
 import { formateDate } from "../../utils/formateDate";
 
 
-const DoctorAbout = () => {
+const DoctorAbout = ({ name, about, qualification, experience }) => {
     return (
         <div>
            <div>
-            <h3 className="text-[20px] leading-[30px] text-headingColor font-semibold flex items-center gap-2">About of <span className="text-irisBlueColor font-bold text-[24px] leading-9">Mahibur Rahman</span></h3>
-            <p className="text__para">Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim fuga eius nam impedit illum maxime, amet, rerum autem cum aperiam voluptatum doloribus, numquam blanditiis ut ad sit debitis reprehenderit tenetur est nobis neque nulla iste ipsum! Vero eius necessitatibus, accusamus aliquam officia, ut itaque, adipisci minima placeat unde explicabo ea.</p>
+            <h3 className="text-[20px] leading-[30px] text-headingColor font-semibold flex items-center gap-2">About of <span className="text-irisBlueColor font-bold text-[24px] leading-9">{name}</span></h3>
+            <p className="text__para">{about}.</p>
            </div>
            <div className="mt-12">
             <h3 className="text-[20px] leading-[30px] text-headingColor font-semibold">Education</h3>
