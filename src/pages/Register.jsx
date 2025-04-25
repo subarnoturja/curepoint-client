@@ -159,6 +159,7 @@ const Register = () => {
                   </select>
                 </label>
               </div>
+              {/* upload photo */}
               <div className="mb-5 flex items-center gap-3">
                 { selectedFile && <figure className="w-[60px] h-[60px] rounded-full border-2 border-solid border-primaryColor flex items-center justify-center">
                   <img src={previewURL} alt="" className="w-full rounded-full" />
