@@ -1,28 +1,45 @@
-import { useState } from "react";
+/* eslint-disable react/prop-types */
+import { useEffect, useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
+import uploadImageToCloudinary from "../../utils/uploadCloudinary";
+import { Bounce, toast } from "react-toastify";
+import { BASE_URL, token } from "../../config";
 
-const DoctorProfile = () => {
+const DoctorProfile = ({ doctorData }) => {
 
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    password: "",
     phone: "",
     bio: "",
     gender: "",
     specialization: "",
     ticketPrice: 0,
-    qualifications: [
-      { startingDate: "", endingDate: "", degree: "", university: "" },
-    ],
-    experiences: [
-        { startingDate: "", endingDate: "", position: "", hospital: "" },
-    ],
-    timeSlots: [
-        { day: "", startingDate: "", endingDate: "" },
-    ],
+    qualifications: [],
+    experiences: [],
+    timeSlots: [],
     about: "",
     photo: null
   });
+
+  useEffect(() => {
+    setFormData({
+        name: doctorData?.name,
+        email: doctorData?.email,
+        password: doctorData?.password,
+        phone: doctorData?.phone,
+        bio: doctorData?.bio,
+        gender: doctorData?.gender,
+        specialization: doctorData?.specialization,
+        ticketPrice: doctorData?.ticketPrice,
+        qualifications: doctorData?.qualifications,
+        experiences: doctorData?.experiences,
+        timeSlots: doctorData?.timeSlots,
+        about: doctorData?.about,
+        photo: doctorData?.photo
+    })
+  }, [doctorData])
 
   // handle Input Change Function
   const handleInputChange = (e) => {
@@ -30,13 +47,55 @@ const DoctorProfile = () => {
   };
 
   // Handle File Input Change Function
-  const handleFileInputChange = (e) => {
+  const handleFileInputChange = async event => {
+    const file = event.target.files[0];
+    const data = await uploadImageToCloudinary(file);
 
+    setFormData({ ...formData, photo: data?.url })
   }
 
   // Update Profile Handler Function
   const updateProfileHandler = async e => {
     e.preventDefault();
+    try {
+        const res = await fetch(`${BASE_URL}/doctors/${doctorData._id}`, {
+            method: "PUT",
+            headers: {
+                'content-type':'application/json',
+                Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify(formData)
+        })
+
+        const result = await res.json()
+        if(!res.ok){
+            throw Error(result.message)
+        }
+        toast.success(result.message, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+            });
+
+    } catch (error) {
+        toast.error(error.message, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+            });
+    }
   }
 
   // Add Item Function
@@ -64,6 +123,8 @@ const DoctorProfile = () => {
     setFormData(prevFormData => ({...prevFormData, [key]:prevFormData[key].filter((_, i) => i !== index)}))
   }
 
+  // ------ Qualification ------ //
+
   // Reusable Add Qualification function
   const addQualification = e => {
     e.preventDefault()
@@ -86,6 +147,8 @@ const DoctorProfile = () => {
     deleteItem('qualifications', index)
   }
 
+  // ------ Experience ------ //
+
   // Reusable Add Experience function
   const addExperience = e => {
     e.preventDefault()
@@ -106,6 +169,29 @@ const DoctorProfile = () => {
   const deleteExperience = (e, index) => {
     e.preventDefault()
     deleteItem('experiences', index)
+  }
+
+  // ------ Time Slot ------ //
+
+  // Reusable Add Time Slot function
+  const addTimeSlot = e => {
+    e.preventDefault()
+    addItem('timeSlots', {
+        day: "Sunday",
+        startingDate: "10:00",
+        endingDate: "04:30",
+    })
+  }
+
+  // Handle TimeSlot Chance function 
+  const handleTimeSlotChange = (event, index) => {
+    handleReusableInputChangeFunc('timeSlots', index, event)
+  }
+
+  // handle delete TimeSlot function
+  const deleteTimeSlot = (e, index) => {
+    e.preventDefault()
+    deleteItem('timeSlots', index)
   }
 
   return (
@@ -136,13 +222,13 @@ const DoctorProfile = () => {
                 className="form__input"
                 readOnly
                 aria-readonly
-                disabled="true"
+                disabled={true}
             />
             </div>
             <div className="mb-5">
             <p className="form__label">Phone*</p>
             <input
-                type="number"
+                type="tel"
                 name="phone"
                 value={formData.phone}
                 onChange={handleInputChange}
@@ -157,7 +243,7 @@ const DoctorProfile = () => {
                 name="bio"
                 value={formData.bio}
                 onChange={handleInputChange}
-                placeholder="Phone Number"
+                placeholder="Bio"
                 className="form__input"
                 maxLength={100}
             />
@@ -333,7 +419,11 @@ const DoctorProfile = () => {
                         <div className="grid grid-cols-2 md:grid-cols-4 mb-[30px] gap-5">
                             <div>
                                 <p className="form__label">Day*</p>
-                                <select name="day" value={item.day} className="form__input py-3.5">
+                                <select name="day"
+                                value={item.day}
+                                className="form__input py-3.5"
+                                onChange={e => handleTimeSlotChange(e, index)}
+                                >
                                     <option value="">Select</option>
                                     <option value="saturday">Saturday</option>
                                     <option value="sunday">Sunday</option>
@@ -351,6 +441,7 @@ const DoctorProfile = () => {
                                 name="startingDate"
                                 value={item.startingDate}
                                 className="form__input"
+                                onChange={e => handleTimeSlotChange(e, index)}
                                 />
                             </div>
                             <div>
@@ -360,19 +451,19 @@ const DoctorProfile = () => {
                                 name="endingDate"
                                 value={item.endingDate}
                                 className="form__input"
+                                onChange={e => handleTimeSlotChange(e, index)}
                                 />
                             </div>
-                            <div className="flex items-center">
+                            <div onClick={e => deleteTimeSlot(e, index)} className="flex items-center">
                                 <button className="bg-red-600 p-2 rounded-full text-white text-[18px] cursor-pointer mt-9">
                                     <AiOutlineDelete />
                                 </button>
                             </div>
-                        </div>
-                        
+                        </div>   
                     </div>
                 </div>
             ))}
-            <button className="bg-[#000] py-2 px-5 rounded-lg text-white h-fit cursor-pointer">Add Time Slot</button>
+            <button onClick={addTimeSlot} className="bg-[#000] py-2 px-5 rounded-lg text-white h-fit cursor-pointer">Add Time Slot</button>
             </div>
             {/* about */}
             <div className="mb-5">
