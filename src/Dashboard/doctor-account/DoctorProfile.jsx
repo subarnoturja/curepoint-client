@@ -178,8 +178,8 @@ const DoctorProfile = ({ doctorData }) => {
     e.preventDefault()
     addItem('timeSlots', {
         day: "Sunday",
-        startingDate: "10:00",
-        endingDate: "04:30",
+        startingTime: "10:00",
+        endingTime: "04:30",
     })
   }
 
@@ -438,8 +438,8 @@ const DoctorProfile = ({ doctorData }) => {
                                 <p className="form__label">Starting Time*</p>
                                 <input
                                 type="time"
-                                name="startingDate"
-                                value={item.startingDate}
+                                name="startingTime"
+                                value={item.startingTime}
                                 className="form__input"
                                 onChange={e => handleTimeSlotChange(e, index)}
                                 />
@@ -448,8 +448,8 @@ const DoctorProfile = ({ doctorData }) => {
                                 <p className="form__label">Ending Time*</p>
                                 <input
                                 type="time"
-                                name="endingDate"
-                                value={item.endingDate}
+                                name="endingTime"
+                                value={item.endingTime}
                                 className="form__input"
                                 onChange={e => handleTimeSlotChange(e, index)}
                                 />
