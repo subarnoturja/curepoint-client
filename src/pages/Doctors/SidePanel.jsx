@@ -1,8 +1,42 @@
 /* eslint-disable react/prop-types */
-
+import { Bounce, toast } from "react-toastify";
+import { BASE_URL, token } from "../../config";
 import convertTime from "../../utils/convertTime";
 
-const SidePanel = ({ ticketPrice, timeSlots }) => {
+const SidePanel = ({ doctorId, ticketPrice, timeSlots }) => {
+
+    const bookingHandler = async() => {
+        try {
+            const res = await fetch(`${BASE_URL}/bookings/checkout-session/${doctorId}`, {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+
+            const data = await res.json()
+            
+            if(!res.ok){
+                throw new Error(data.message + "Please try again")
+            }
+            if(data.session.url){
+                window.location.href = data.session.url
+            }
+        } catch (error) {
+            toast.error(error.message, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                transition: Bounce,
+              });
+        }
+    }
+
     return (
         <div className="shadow-panelShadow p-3 md:p-6 rounded-lg">
             <div className="flex items-center justify-between">
@@ -10,7 +44,7 @@ const SidePanel = ({ ticketPrice, timeSlots }) => {
                     Ticket Price
                 </p>
                 <span className="text-[16px] leading-7 md:text-[22px] md:leading-8 text-headingColor font-semibold">{ticketPrice} BDT</span>
-            </div>
+            </div> 
             <div className="mt-[30px]">
                 <p className="text__para mt-0 font-semibold text-headingColor">
                     Available Time Slot: 
@@ -29,7 +63,7 @@ const SidePanel = ({ ticketPrice, timeSlots }) => {
                     
                 </ul>
             </div>
-            <button className="btn px-2 w-full rounded-lg">Book Appointment</button>
+            <button onClick={bookingHandler} className="btn px-2 w-full rounded-lg">Book Appointment</button>
         </div>
     );
 };

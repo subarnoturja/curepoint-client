@@ -10,6 +10,7 @@ import Services from "../pages/Services";
 import MyAccount from "../Dashboard/user-account/MyAccount";
 import Dashboard from "../Dashboard/doctor-account/Dashboard";
 import PrivateRoute from "./PrivateRoute";
+import CheckoutSuccess from "../pages/CheckoutSuccess";
 
 export const router = createBrowserRouter([
     {
@@ -43,6 +44,10 @@ export const router = createBrowserRouter([
             {
                 path: '/services',
                 element: <Services />,
+            },   
+            {
+                path: '/checkout-success',
+                element: <CheckoutSuccess />
             },   
             {
                 path: '/users/profile/me',
